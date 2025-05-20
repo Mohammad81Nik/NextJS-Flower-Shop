@@ -1,0 +1,17 @@
+openapi: 3.0.0
+
+info:
+  title: Flower Online Store Api
+  version: 1.0.0
+  description: Flower Online Store Api doc
+
+servers:
+  - url: http://localhost:8080/api
+    description: Development server
+
+tags:
+  - name: Auth
+  - name: Users
+  - name: Products
+  - name: Categories
+  - name: Images
