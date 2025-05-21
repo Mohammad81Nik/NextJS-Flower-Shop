@@ -83,7 +83,7 @@ components:
         image_url:
           type: string
           example: "https://example.com/image.jpg"
-  Respones:
+  Responses:
     BadRequest:
       description: Bad Request
       content:
@@ -126,7 +126,82 @@ components:
                 example: "Internal Server Error"
 
 paths:
-  /auth:
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "mohammad@gmail.com"
+                password:
+                  type: string
+                  example: "examplepassword"
+      responses:
+        201:
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "success"
+                  data:
+                    $ref: "#/components/Schemas/User"
+        400:
+          $ref: "#/components/Responses/BadRequest"
+        500:
+          $ref: "#/components/Responses/InternalServerError"
+  /auth/login:
+    post:
+      summary: Logges in a user
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "mohammad@gmail.com"
+                password:
+                  type: string
+                  example: "examplepassword"
+      responses:
+        200:
+          description: User logged in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "success"
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        example: "some token"
+        400:
+          $ref: "#/components/Responses/BadRequest"
+        401:
+          $ref: "#/components/Responses/Unauthorized"
+        500:
+          $ref: "#/components/Responses/InternalServerError"
   /users:
   /products:
   /categories:
