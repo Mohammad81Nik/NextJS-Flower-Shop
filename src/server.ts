@@ -4,6 +4,7 @@ import path from "path";
 import YAML from "yamljs";
 import swaggerUi from "swagger-ui-express";
 import prisma from "../db";
+import { errorHandlerMiddleware, notFoundMiddleware, setAuthTokenMiddlewar } from "./middleware";
 
 dotenv.config();
 
@@ -16,6 +17,12 @@ app.use(
 );
 
 app.use(express.json());
+
+app.use(setAuthTokenMiddlewar);
+
+app.use(errorHandlerMiddleware);
+
+app.use(notFoundMiddleware)
 
 app.listen(process.env.PORT, async () => {
     try{ 
