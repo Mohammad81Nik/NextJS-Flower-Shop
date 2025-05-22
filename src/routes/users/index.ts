@@ -7,7 +7,7 @@ import {
 
 const router = express.Router();
 
-router.post("/", getUsers);
+router.get("/", getUsers);
 
 router.put("/:id", editUserById);
 
