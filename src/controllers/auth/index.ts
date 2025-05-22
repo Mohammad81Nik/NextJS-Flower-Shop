@@ -10,12 +10,12 @@ dotenv.config();
 const register: RequestHandler<
   any,
   any,
-  { email?: string; password?: string }
+  { email?: string; password?: string, name?: string }
 > = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, name } = req.body;
 
-    if (!email || !password) {
+    if (!email || !password || !name) {
       throw errorConstructor("All fields are required", 400);
     }
 
@@ -35,6 +35,7 @@ const register: RequestHandler<
 
     const user = await prisma.user.create({
       data: {
+        name,
         password: encryptedPassword,
         email,
       },

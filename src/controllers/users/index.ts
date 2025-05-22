@@ -75,17 +75,18 @@ const editUserById: RequestHandler<
   {
     email?: string;
     password?: string;
+    name?: string;
   }
 > = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { email, password } = req.body;
+    const { email, password, name } = req.body;
 
     if (!id) {
       throw errorConstructor("Params is required", 400);
     }
 
-    if (!email && !password) {
+    if (!email && !password && !name) {
       throw errorConstructor("No fields to update", 400);
     }
 
@@ -108,6 +109,7 @@ const editUserById: RequestHandler<
         id: parseInt(id),
       },
       data: {
+        name,
         email,
         password: modifiedPassword,
       },
