@@ -203,6 +203,118 @@ paths:
         500:
           $ref: "#/components/Responses/InternalServerError"
   /users:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Gets all the users with the query filters
+      tags: 
+        - Users
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: integer
+          example: 1
+        - in: query
+          name: email
+          schema:
+            type: string
+            example: "mohammad@gmail.com"
+      responses:
+        200:
+          description: Users fetched successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "success"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/Schemas/User"
+        500:
+          $ref: "#/components/Responses/InternalServerError"
+  /users/{id}:
+    delete:
+      security:
+        - bearerAuth: []
+      summary: Deletes a user by id
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        200:
+          description: User deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "success"
+                  data:
+                    $ref: "#/components/Schemas/User"
+        400:
+          $ref: "#/components/Responses/BadRequest"
+        404:
+          $ref: "#/components/Responses/NotFound"
+        500:
+          $ref: "#/components/Responses/InternalServerError"
+    put:
+      security:
+        - bearerAuth: []
+      summary: Edits a user
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "mohammad@gmail.com"
+                password:
+                  type: string
+                  example: "examplepassword"
+      responses:
+        200:
+          description: User edited successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "success"
+                  data:
+                    $ref: "#/components/Schemas/User"
+        400:
+          $ref: "#/components/Responses/BadRequest"
+        404:
+          $ref: "#/components/Responses/NotFound"
+        500:
+          $ref: "#/components/Responses/InternalServerError"
   /products:
   /categories:
   /images:
