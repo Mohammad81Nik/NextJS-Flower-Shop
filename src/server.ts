@@ -4,8 +4,9 @@ import path from "path";
 import YAML from "yamljs";
 import swaggerUi from "swagger-ui-express";
 import prisma from "../db";
-import { errorHandlerMiddleware, notFoundMiddleware, setAuthTokenMiddlewar } from "./middleware";
+import { authenticationMiddleware, errorHandlerMiddleware, notFoundMiddleware, setAuthTokenMiddlewar } from "./middleware";
 import authRoutes from "./routes/auth";
+import usersRoutes from "./routes/users";
 
 dotenv.config();
 
@@ -22,6 +23,8 @@ app.use(express.json());
 app.use(setAuthTokenMiddlewar);
 
 app.use("/api/auth", authRoutes);
+
+app.use("/api/users", authenticationMiddleware, usersRoutes);
 
 app.use(errorHandlerMiddleware);
 
