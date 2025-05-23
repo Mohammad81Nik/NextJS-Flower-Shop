@@ -36,9 +36,9 @@ model Product {
 model Category {
   id          Int       @id @default(autoincrement())
   name        String
-  description String    @db.Text
+  description String?   @db.Text
   created_at  DateTime  @default(now())
-  image_url   String    @db.Text
+  image_url   String?   @db.Text
   Product     Product[]
 }
 

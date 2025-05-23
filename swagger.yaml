@@ -71,6 +71,9 @@ components:
         description:
           type: string
           example: "Category Description"
+        image_url:
+          type: string
+          example: "https://example.com/image.jpg"
         created_at:
           type: string
           example: "2025-05-22T01:52:29.000Z"
@@ -210,7 +213,7 @@ paths:
       security:
         - bearerAuth: []
       summary: Gets all the users with the query filters
-      tags: 
+      tags:
         - Users
       parameters:
         - in: query
@@ -293,7 +296,7 @@ paths:
             schema:
               type: object
               properties:
-                name: 
+                name:
                   type: string
                   example: "example"
                 email:
@@ -323,4 +326,151 @@ paths:
           $ref: "#/components/Responses/InternalServerError"
   /products:
   /categories:
+    post:
+      summary: Creates a category
+      tags:
+        - Categories
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "example category name"
+                description:
+                  type: string
+                  example: "example category description"
+                image:
+                  type: string
+                  format: binary
+              required:
+                - name
+      responses:
+        201:
+          description: Category created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "success"
+                  data:
+                    $ref: "#/components/Schemas/Category"
+        400:
+          $ref: "#/components/Responses/BadRequest"
+        500:
+          $ref: "#/components/Responses/InternalServerError"
+    get:
+      summary: Returns all categories based on the filters provided
+      tags:
+        - Categories
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+      responses:
+        200:
+          description: Categories fetched successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "success"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/Schemas/Category"
+        500:
+          $ref: "#/components/Responses/InternalServerError"
+  /categories/{id}:
+    put:
+      summary: Updates a category based on id
+      tags:
+        - Categories
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "updated name"
+                description:
+                  type: string
+                  example: "updated description"
+                image:
+                  type: string
+                  format: binary
+      responses:
+        201:
+          description: Category updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: 
+                  message:
+                    type: string
+                    example: "success"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/Schemas/Category"
+        400:
+          $ref: "#/components/Responses/BadRequest"
+        404:
+          $ref: "#/components/Responses/NotFound"
+        500:
+          $ref: "#/components/Responses/InternalServerError"
+    delete:
+      summary: Deletes a category based on id
+      tags:
+        - Categories
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            example: 1
+      responses:
+        200:
+          description: Category deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "success"
+        400:
+          $ref: "#/components/Responses/BadRequest"
+        404:
+          $ref: "#/components/Responses/NotFound"
+        500:
+          $ref: "#/components/Responses/InternalServerError"
+
   /images:
