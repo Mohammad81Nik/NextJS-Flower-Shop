@@ -21,6 +21,7 @@ type Middleware = (req: Request, res: Response, next: NextFunction) => void
 // data types:
 interface User {
   id: number;
+  name: string;
   email: string;
   password: string;
   created_at: Date;
@@ -39,6 +40,7 @@ interface Category {
     id: number;
     name: string;
     description: string;
+    image_url: string;
     created_at: Date;
 }
 

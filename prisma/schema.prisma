@@ -16,6 +16,7 @@ datasource db {
 
 model User {
   id         Int      @id @default(autoincrement())
+  name       String
   email      String   @unique
   password   String   @unique
   created_at DateTime @default(now())
@@ -24,7 +25,7 @@ model User {
 model Product {
   id          Int      @id @default(autoincrement())
   title       String
-  description String
+  description String   @db.Text
   price       Float
   category_id Int
   created_at  DateTime @default(now())
@@ -35,14 +36,15 @@ model Product {
 model Category {
   id          Int       @id @default(autoincrement())
   name        String
-  description String
+  description String    @db.Text
   created_at  DateTime  @default(now())
+  image_url   String    @db.Text
   Product     Product[]
 }
 
 model Image {
   id         Int     @id @default(autoincrement())
   product_id Int
-  image_url  String
+  image_url  String  @db.Text
   Product    Product @relation(fields: [product_id], references: [id])
 }

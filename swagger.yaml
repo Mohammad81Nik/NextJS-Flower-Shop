@@ -29,6 +29,9 @@ components:
         id:
           type: integer
           example: 1
+        name:
+          type: string
+          example: "User Name"
         email:
           type: string
           example: "user@gmail.com"
@@ -140,7 +143,7 @@ paths:
               properties:
                 email:
                   type: string
-                  example: "mohammad@gmail.com"
+                  example: "example@gmail.com"
                 password:
                   type: string
                   example: "examplepassword"
@@ -175,7 +178,7 @@ paths:
               properties:
                 email:
                   type: string
-                  example: "mohammad@gmail.com"
+                  example: "example@gmail.com"
                 password:
                   type: string
                   example: "examplepassword"
@@ -219,7 +222,7 @@ paths:
           name: email
           schema:
             type: string
-            example: "mohammad@gmail.com"
+            example: "example@gmail.com"
       responses:
         200:
           description: Users fetched successfully
@@ -290,9 +293,12 @@ paths:
             schema:
               type: object
               properties:
+                name: 
+                  type: string
+                  example: "example"
                 email:
                   type: string
-                  example: "mohammad@gmail.com"
+                  example: "example@gmail.com"
                 password:
                   type: string
                   example: "examplepassword"
